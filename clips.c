@@ -4,6 +4,7 @@
 
 void init(void);
 void display(void);
+void reshape(int w, int h);
 
 int main(int argc, char** argv){
   glutInit(&argc,argv);
@@ -13,6 +14,7 @@ int main(int argc, char** argv){
   glutCreateWindow("Hello");
   init();
   glutDisplayFunc(display);
+  glutReshapeFunc(reshape);
   glutMainLoop();
   return 0;
 }
@@ -23,33 +25,45 @@ void init(void)
   glLoadIdentity();
   glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
 }
+void reshape(int w, int h)
+{
+  glViewport(0,0,(GLsizei) w, (GLsizei) h);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(60.0, (GLfloat) w/ (GLfloat) h, 1,10);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  gluLookAt(1.0,1.0,1.0,
+	    0.7,0.7,0.0,
+	    0.0,1.0,0.0);
+}
+
 void display(void)
 {
  glClear(GL_COLOR_BUFFER_BIT);
- // gluLookAt(0.0, 0.0, 0.0, 0.25, 0.25, 0.0, 1.0, 1.0, 1.0);
- glColor3f(1.0, 0, 0);
+ //glColor3f(1.0, 0, 0);
  glTranslatef(0.5,0.5,0);
- glutSolidSphere(0.05,100,100);
+ glutWireSphere(0.05,10,10);
 
- glColor3f(0, 1.0, 0);
+ //glColor3f(0, 1.0, 0);
  glTranslatef(0.1,0.1,0);
- glutSolidSphere(0.05,100,100);
+ glutWireSphere(0.05,10,10);
 
  glColor3f(0, 0, 1);
  glTranslatef(0.1,0.2,0);
- glutSolidSphere(0.05,100,100);
+ glutWireSphere(0.05,100,100);
 
  glColor3f(1.0, 0, 0); 
- glTranslatef(0.2,0.1,5);
- glutSolidSphere(0.05,100,100);
+ glTranslatef(0.2,0.4,5);
+ glutWireSphere(0.05,100,100);
 
  glColor3f(1.0, 0, 1.0);
- glTranslatef(-0.1,0.3,0);
- glutSolidSphere(0.05,100,100);
+ glTranslatef(-0.3,0.3,0);
+ glutWireSphere(0.05,100,100);
 
  glColor3f(0, 1.0, 0);
  glTranslatef(0.1,0.1,-1);
- glutSolidSphere(0.05,100,100);
+ glutWireSphere(0.05,100,100);
 
  glFlush();
 }
